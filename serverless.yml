@@ -1,0 +1,29 @@
+service: cloudx-course-cart-service
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  stage: dev
+  region: eu-west-1
+
+plugins:
+  - serverless-dotenv-plugin
+
+environment:
+  PG_HOST: ${env.PG_HOST}
+  PG_PORT: ${env.PG_PORT}
+  PG_USER: ${env.PG_USER}
+  PG_PASSWORD: ${env.PG_PASSWORD}
+  PG_DATABASE: ${env.PG_DATABASE}
+
+functions:
+  main:
+    handler: dist/main.handler
+    events:
+    - http:
+        method: ANY
+        path: /
+    - http:
+        method: ANY
+        path: '{proxy+}'
